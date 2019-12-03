@@ -8,3 +8,18 @@ if 'ON_HEROKU' in os.environ:
     DATABASE = connect(os.environ.get('DATABASE_URL'))
 else:
     DATABASE = SqliteDatabase('still_breaking.sqlite')
+
+class User(UserMixin, Model):
+    id = PrimaryKeyField(null=False)
+    email = CharField(unique=True)
+    password = CharField()
+
+    class Meta:
+        db_table = 'users'
+        database = DATABASE
+
+def initialize():
+    DATABASE.connect()
+    DATABASE.create_tables([User], safe = True)
+    print("tables created successfully")
+    DATABASE.close()
