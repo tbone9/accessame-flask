@@ -49,11 +49,15 @@ def after_request(response):
 def index():
     return 'hi'
 
-CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(user, origins=['http://localhost:3000', 'https://accessame-flask.herokuapp.com/'], supports_credentials=True)
 app.register_blueprint(user, url_prefix='/api/v1/user')
 
-CORS(place, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(place, origins=['http://localhost:3000', 'https://accessame-flask.herokuapp.com/'], supports_credentials=True)
 app.register_blueprint(place, url_prefix='/api/v1/place')
+
+if 'ON_HEROKU' in os.environ:
+    print('hitting ')
+    models.initialize()
 
 if __name__ == '__main__':
     models.initialize()
