@@ -19,8 +19,23 @@ class User(UserMixin, Model):
         db_table = 'users'
         database = DATABASE
 
+class Place(Model):
+    id = PrimaryKeyField(null=False)
+    name = CharField()
+    address = CharField()
+    lat = FloatField()
+    lng = FloatField()
+    user = ForeignKeyField(User, backref='users')
+    main_entrance = IntegerField(null=True)
+    bathroom = IntegerField(null=True)
+    overall = IntegerField(null=True)
+
+    class Meta:
+        db_table = 'places'
+        database = DATABASE
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User], safe = True)
+    DATABASE.create_tables([User, Place], safe = True)
     print("tables created successfully")
     DATABASE.close()

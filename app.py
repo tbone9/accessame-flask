@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, g
 from flask_cors import CORS
 from flask_login import LoginManager
 from resources.users import user
+from resources.places import place
 
 DEBUG = True
 PORT = 8000
@@ -48,8 +49,11 @@ def after_request(response):
 def index():
     return 'hi'
 
-CORS(user, origins=['http://localhost:3000', 'https://still-breaking-react.herokuapp.com'], supports_credentials=True)
+CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
 app.register_blueprint(user, url_prefix='/api/v1/user')
+
+CORS(place, origins=['http://localhost:3000'], supports_credentials=True)
+app.register_blueprint(place, url_prefix='/api/v1/place')
 
 if __name__ == '__main__':
     models.initialize()
