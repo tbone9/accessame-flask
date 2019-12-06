@@ -27,8 +27,11 @@ class Place(Model):
     lng = FloatField()
     user = ForeignKeyField(User, backref='users')
     main_entrance = IntegerField(null=True)
+    main_entrance_ratings = IntegerField(null=True)
     bathroom = IntegerField(null=True)
+    bathroom_ratings = IntegerField(null=True)
     overall = IntegerField(null=True)
+    bathroom_ratings = IntegerField(null=True)
 
     class Meta:
         db_table = 'places'
