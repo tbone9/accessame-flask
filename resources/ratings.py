@@ -29,3 +29,25 @@ def create_rating(placeId):
     created_rating = models.Rating.create(**payload)
     create_rating_dict = model_to_dict(created_rating)
     return jsonify(status={'code': 201, 'msg': 'success'}, data=create_rating_dict)
+
+@rating.route('/<ratingId>/', methods=['PUT'])
+def update_rating(ratingId):
+    payload = request.get_json()
+    if not current_user.is_authenticated:
+        return jsonify(data={}, status={'code': 401, 'message':'You must be logged in to update a rating'})
+    try:
+        rating = models.Rating.get_by_id(ratingId)
+        rating_dict = model_to_dict(rating)
+        print(rating_dict, 'RATING DICT')
+        if rating_dict['user']['id'] is not current_user.id:
+            return jsonify(data={}, status={'code': 401, 'message': 'You can only update your own ratings'})
+        updated_rating = models.Rating.update(
+                main_entrance=payload['main_entrance'],
+                bathroom=payload['bathroom'],
+                hallways=payload['hallways'],
+                notes=payload['notes'],
+            ).where(models.Rating.id == ratingId).execute()
+        updated_rating_dict = model_to_dict(models.Rating.get(id=ratingId))
+        return jsonify(data=updated_rating_dict, status={"code": 201, "message": "Rating updated"})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={'code': 401, 'message': 'Rating to update does not exist'})

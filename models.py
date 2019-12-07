@@ -42,6 +42,7 @@ class Rating(Model):
     main_entrance = IntegerField(null=True)
     bathroom = IntegerField(null=True)
     hallways = IntegerField(null=True)
+    notes = CharField(null=True)
     place = ForeignKeyField(Place, backref='places')
     user = ForeignKeyField(User, backref='users')
 
