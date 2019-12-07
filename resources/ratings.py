@@ -51,3 +51,12 @@ def update_rating(ratingId):
         return jsonify(data=updated_rating_dict, status={"code": 201, "message": "Rating updated"})
     except models.DoesNotExist:
         return jsonify(data={}, status={'code': 401, 'message': 'Rating to update does not exist'})
+
+@rating.route('/<ratingId>/', methods=['DELETE'])
+def delete_rating(ratingId):
+    rating_to_delete = models.Rating.get_by_id(ratingId)
+    if rating_to_delete.user.id != current_user.id:
+        return jsonify(data="Forbidden", status={'code': 403, 'message': "User can only delete their own ratings."})
+    
+    rating_to_delete.delete_instance()
+    return jsonify(data='Rating successfully deleted', status={"code": 200, "message": "Rating deleted successfully"})
