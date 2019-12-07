@@ -6,6 +6,15 @@ from flask_login import current_user
 place = Blueprint('places', 'place')
 
 @place.route('/', methods=['GET'])
+def get_all_places():
+    try:
+        all_places = models.Place.select()
+        all_places = [model_to_dict(place) for place in all_places]
+        return jsonify(data=all_places, status={'code': 200, 'message': 'Success'})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={'code': 401, 'message': 'Error getting the resources'})
+
+@place.route('/user/', methods=['GET'])
 def get_user_places():
     print('place index route')
     try:
