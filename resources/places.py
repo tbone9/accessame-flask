@@ -34,10 +34,14 @@ def show_place(placeId):
 @place.route('/', methods=['POST'])
 def create_place():
     print('place create route')
-    
+    print('CURRENT USER', current_user)
     if not current_user.is_authenticated:
         print(current_user, 'NOT ALLOWED')
         return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to create a place'})
+    # user = models.User.get_by_id(current_user.id)
+    # user_dict = model_to_dict(user)
+    # print(user_dict, 'User DICT')
+
     payload = request.get_json()
     payload['user'] = current_user.id
     created_place = models.Place.create(**payload)
