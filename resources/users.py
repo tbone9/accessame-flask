@@ -15,6 +15,15 @@ def get_all_users():
     except models.DoesNotExist:
         return jsonify(data={}, status={'code': 401, 'message': 'Error getting the users'})
 
+@user.route('/show/', methods=['GET'])
+def get_one_user():
+    if not current_user.is_authenticated:
+        return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to view this user'})
+    else:
+        user = models.User.get_by_id(current_user.id)
+        user_dict = model_to_dict(user)
+        return jsonify(data=user_dict, status={'code': 200, 'message': 'This is the current user'})
+
 @user.route('/<userId>/', methods=['PUT'])
 def update_user(userId):
     print('updating users')

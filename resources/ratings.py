@@ -14,6 +14,19 @@ def get_place_ratings(placeId):
     except models.DoesNotExist:
         return jsonify(data={}, status={'code': 401, 'message': 'Error getting the resources'})
 
+@rating.route('/user/<userId>/', methods=['GET'])
+def get_user_ratings(userId):
+    print('user ratings')
+    try:
+        this_users_ratings = models.Rating.select().where(models.Rating.user_id == current_user.id)
+
+        this_users_ratings = [model_to_dict(rating) for rating in this_users_ratings]
+
+        # this_users_ratings = [model_to_dict(rating) for rating in Models.Rating.select().where(models.Rating.user_id == current_user.id)]
+        return jsonify(data=this_users_ratings, status={'code': 200, 'message': 'Success'})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={'code': 401, 'message': 'Error getting the resources'})
+
 @rating.route('/<placeId>/', methods=['POST'])
 def create_rating(placeId):
     print('create rating')
