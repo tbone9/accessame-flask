@@ -25,20 +25,33 @@ class Place(Model):
     address = CharField()
     lat = FloatField()
     lng = FloatField()
-    user = ForeignKeyField(User, backref='users')
-    main_entrance = IntegerField(null=True)
-    main_entrance_ratings = IntegerField(null=True)
-    bathroom = IntegerField(null=True)
-    bathroom_ratings = IntegerField(null=True)
-    overall = IntegerField(null=True)
-    bathroom_ratings = IntegerField(null=True)
+    user = CharField()
+    # main_entrance = IntegerField(null=True)
+    # main_entrance_ratings = IntegerField(null=True)
+    # bathroom = IntegerField(null=True)
+    # bathroom_ratings = IntegerField(null=True)
+    # overall = IntegerField(null=True)
+    # bathroom_ratings = IntegerField(null=True)
 
     class Meta:
         db_table = 'places'
         database = DATABASE
 
+class Rating(Model):
+    id = PrimaryKeyField(null=False)
+    main_entrance = IntegerField(null=True)
+    bathroom = IntegerField(null=True)
+    hallways = IntegerField(null=True)
+    notes = CharField(null=True)
+    place = ForeignKeyField(Place, backref='places')
+    user = ForeignKeyField(User, backref='users')
+
+    class Meta:
+        db_table = 'ratings'
+        database = DATABASE
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([User, Place], safe = True)
+    DATABASE.create_tables([User, Place, Rating], safe = True)
     print("tables created successfully")
     DATABASE.close()

@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_login import LoginManager
 from resources.users import user
 from resources.places import place
+from resources.ratings import rating
 
 DEBUG = True
 PORT = 8000
@@ -54,6 +55,9 @@ app.register_blueprint(user, url_prefix='/api/v1/user')
 
 CORS(place, origins=['http://localhost:3000', 'https://accessame-react.herokuapp.com'], supports_credentials=True)
 app.register_blueprint(place, url_prefix='/api/v1/place')
+
+CORS(rating, origins=['http://localhost:3000', 'https://accessame-react.herokuapp.com'], supports_credentials=True)
+app.register_blueprint(rating, url_prefix='/api/v1/rating')
 
 if 'ON_HEROKU' in os.environ:
     print('hitting ')
