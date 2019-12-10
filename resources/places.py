@@ -18,7 +18,7 @@ def get_all_places():
 def get_user_places():
     print('place index route')
     try:
-        this_users_places = models.Place.select().where(models.Place.user_id == current_user.id)
+        this_users_places = models.Place.select().where(models.Place.user == current_user.id)
 
         this_users_places = [model_to_dict(place) for place in this_users_places]
 

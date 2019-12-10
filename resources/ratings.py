@@ -14,6 +14,17 @@ def get_place_ratings(placeId):
     except models.DoesNotExist:
         return jsonify(data={}, status={'code': 401, 'message': 'Error getting the resources'})
 
+@rating.route('/one/<ratingId>/', methods=['GET'])
+def get_one_rating(ratingId):
+    if not current_user.is_authenticated: # Checks if user is logged in
+        return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to view this rating'}) 
+    try:
+        one_rating = models.Rating.get(id=ratingId)
+        rating_dict = model_to_dict(one_rating)
+        return jsonify(data=rating_dict,status={"code":"201","message":"Rating found"})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={'code': 401, 'message': 'Rating to show does not exist'})
+
 @rating.route('/user/<userId>/', methods=['GET'])
 def get_user_ratings(userId):
     print('user ratings')
