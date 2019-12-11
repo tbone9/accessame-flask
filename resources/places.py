@@ -29,8 +29,8 @@ def get_user_places():
 
 @place.route('/<placeId>/',methods=['GET'])
 def show_place(placeId):
-    if not current_user.is_authenticated: # Checks if user is logged in
-        return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to view this place'})
+    # if not current_user.is_authenticated: # Checks if user is logged in
+    #     return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to view this place'})
     try:
         found_place = models.Place.get(id=placeId)
         place_dict = model_to_dict(found_place)
