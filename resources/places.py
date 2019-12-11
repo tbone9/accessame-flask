@@ -52,7 +52,7 @@ def create_place():
     # print(user_dict, 'User DICT')
 
     payload = request.get_json()
-    payload['user'] = current_user.id
+    # payload['user'] = current_user.id
     created_place = models.Place.create(**payload)
     create_place_dict = model_to_dict(created_place)
     return jsonify(status={'code': 201, 'msg': 'success'}, data=create_place_dict)
