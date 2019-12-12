@@ -51,16 +51,16 @@ Google Maps and Places
 ## Wireframes and Entity Relationships (note: these diagrams were from the app planning stage)
 
 ### CRUD Routes
-![crud routes](https://imgur.com/T6REWGt)
+![crud routes](https://i.imgur.com/T6REWGt.png)
 
 ### Database Structure
-![database structure](https://imgur.com/zGwkxiN)
+![database structure](https://i.imgur.com/zGwkxiN.png)
 
 ### Database Models
-![database models](https://imgur.com/elxxjco)
+![database models](https://i.imgur.com/elxxjco.png)
 
 ### React Layout
-![React layout](https://imgur.com/W31fTOX)
+![React layout](https://i.imgur.com/W31fTOX.png)
 
 ## Milestones
 1. create basic Flask/Python routes and models for users, places, and accessibility
@@ -82,4 +82,3 @@ Google Maps and Places
 4. Intial center of map is set by current location of user.
 5. Organize places added by users in a less cluttered way. 
 6. Add date to each rating. 
-
