@@ -6,14 +6,14 @@ from playhouse.shortcuts import model_to_dict
 
 user = Blueprint('users', 'user')
 
-@user.route('/', methods=['GET'])
-def get_all_users():
-    print('hey there')
-    try:
-        all_users = [model_to_dict(user) for user in models.User.select()]
-        return jsonify(data=all_users, status={'code': 200, 'message': 'Success'})
-    except models.DoesNotExist:
-        return jsonify(data={}, status={'code': 401, 'message': 'Error getting the users'})
+# @user.route('/', methods=['GET'])
+# def get_all_users():
+#     print('hey there')
+#     try:
+#         all_users = [model_to_dict(user) for user in models.User.select()]
+#         return jsonify(data=all_users, status={'code': 200, 'message': 'Success'})
+#     except models.DoesNotExist:
+#         return jsonify(data={}, status={'code': 401, 'message': 'Error getting the users'})
 
 @user.route('/show/', methods=['GET'])
 def get_one_user():
