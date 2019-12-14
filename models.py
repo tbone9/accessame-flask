@@ -25,13 +25,7 @@ class Place(Model):
     address = CharField()
     lat = FloatField()
     lng = FloatField()
-
-    # main_entrance = IntegerField(null=True)
-    # main_entrance_ratings = IntegerField(null=True)
-    # bathroom = IntegerField(null=True)
-    # bathroom_ratings = IntegerField(null=True)
-    # overall = IntegerField(null=True)
-    # bathroom_ratings = IntegerField(null=True)
+    user = ForeignKeyField(User, backref='users')
 
     class Meta:
         db_table = 'places'
