@@ -51,7 +51,7 @@ def create_place():
     # print(user_dict, 'User DICT')
 
     payload = request.get_json()
-    # payload['user'] = current_user.id
+    payload['user'] = current_user.id
     created_place = models.Place.create(**payload)
     create_place_dict = model_to_dict(created_place)
     return jsonify(status={'code': 201, 'msg': 'success'}, data=create_place_dict)
@@ -78,18 +78,18 @@ def update_place(placeId):
     except models.DoesNotExist:
         return jsonify(data={}, status={'code': 401, 'message': 'Place to update does not exist'})
 
-# @place.route('/<placeId>/', methods=['DELETE'])
-# # @login_required
-# def delete_place(placeId):
+@place.route('/<placeId>/', methods=['DELETE'])
+# @login_required
+def delete_place(placeId):
     
-#     place_to_delete = models.Place.get_by_id(placeId)
+    place_to_delete = models.Place.get_by_id(placeId)
 
-#     if place_to_delete.user.id != current_user.id:
-#         return jsonify(data="Forbidden", status={'code': 403, 'message': "User can only delete their own places."})
-#     else:
-#         place_name = place_to_delete.name
-#     # articles_to_delete = models.Article.select().where(models.Article.topic.user.id == current_user.id)
+    if place_to_delete.user.id != current_user.id:
+        return jsonify(data="Forbidden", status={'code': 403, 'message': "User can only delete their own places."})
+    else:
+        place_name = place_to_delete.name
+    # articles_to_delete = models.Article.select().where(models.Article.topic.user.id == current_user.id)
     
-#     # articles_to_delete.delete()
-#     place_to_delete.delete_instance(recursive=True)
-#     return jsonify(data='Place successfully deleted', status={"code": 200, "message": "{} deleted successfully".format(place_name)})
+    # articles_to_delete.delete()
+    place_to_delete.delete_instance(recursive=True)
+    return jsonify(data='Place successfully deleted', status={"code": 200, "message": "{} deleted successfully".format(place_name)})
