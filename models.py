@@ -25,7 +25,6 @@ class Place(Model):
     address = CharField()
     lat = FloatField()
     lng = FloatField()
-    # user = ForeignKeyField(User, backref='users')
 
     class Meta:
         db_table = 'places'
